@@ -23,6 +23,6 @@ describe('units', function () {
 });
 
 describe('esha', function () {
-  describe.skip('searchFoods()', function () {
-  });
+  describe.skip('search()', function () {});
+  describe.skip('analyze()', function () {});
 });
