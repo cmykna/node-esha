@@ -1,10 +1,16 @@
 var http = require('http')
   , qs = require('querystring')
+  , units = require('./lib/units')
   , api_key = '3gydgk8hnvvxye9ppj7vn8f9'
+  , food = process.argv[2]
+  , query = qs.stringify({
+      query: food
+    , apikey: api_key
+    })
   , options = {
       host: 'api.esha.com'
     , port: 80
-    , path: '/food-units?apikey='+api_key
+    , path: '/foods?' + query
     };
 
 http.get(options, function (res) {
@@ -17,6 +23,8 @@ http.get(options, function (res) {
     throw err;
   })
   .on('end', function () {
-    console.log(data);
+    results = JSON.parse(data);
+    console.log(results.items[0]);
+
   });
 });
