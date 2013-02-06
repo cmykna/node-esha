@@ -7,7 +7,7 @@ var api_key = '3gydgk8hnvvxye9ppj7vn8f9'
 var options = { host: 'api.esha.com', port: 80 };
 var response_times = [];
 
-function search (food, cb) {
+function search (food) {
   var start, end;
   var query = qs.stringify({ query: food, apikey: api_key });
   options.path = '/foods?' + query;
@@ -32,16 +32,16 @@ function search (food, cb) {
         , product: r.product || ''
         , supplier: r.supplier || ''
         , default_unit: units.getUnitDescription(r.unit)
-        , available_units: units.getUnitDescription(r.units)        
+        , available_units: units.getUnitDescription(r.units)
         }
         results_display.push(result);
       });
       end = new Date();
       response_times.push(end-start);
-      
-      // console.log(results_display);
-      // console.log("Query: " + results.query + " took " + (end - start) + "ms, displaying " + 
-      //   results.items.length + " of " + results.total + " results.");
+
+      console.log(results_display);
+      console.log("Query: " + results.query + " took " + (end - start) + "ms, displaying " +
+        results.items.length + " of " + results.total + " results.");
     });
   });
 }
@@ -55,7 +55,7 @@ function timing () {
     if (count == 0) {
       // search one more time, then we're dunzo
       search('broccoli');
-      clearInterval(this);  
+      clearInterval(this);
       total_res_time = _.reduce(response_times, function (m, n) { return m + n }, 0);
       avg_res_time = total_res_time / response_times.length;
       console.log('\x1b[36mAverage: '+ ~~avg_res_time +'ms\x1b[39m');
@@ -66,8 +66,8 @@ function timing () {
   }, 5000);
 }
 
-timing();
-// search(process.argv[2]);
+// timing();
+search(process.argv[2]);
 
 
 
